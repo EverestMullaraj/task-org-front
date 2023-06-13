@@ -1,0 +1,71 @@
+<header class="docs-header-background">
+  <div class="docs-header-section">
+    <div class="docs-header-headline">
+      <h1 class="mat-h1">Task Organizer</h1>
+      <h2>A solution for every company</h2>
+    </div>
+  </div>
+</header>
+
+<div class="employee-tab">
+  <app-tab
+    *ngIf="user?.role == 'Employee'"
+    [assigned$]="assigned$ | async"
+    [completed$]="completed$ | async"
+    [failed$]="failed$ | async"
+  ></app-tab>
+</div>
+
+<div class="cards-container" *ngIf="user?.role == 'Admin'">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Admins</mat-card-title>
+    </mat-card-header>
+    <mat-card-content
+      ><div class="number-of-users">
+        {{ adminStats?.adminNumber }}
+      </div></mat-card-content
+    >
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Managers</mat-card-title>
+    </mat-card-header>
+    <mat-card-content
+      ><div class="number-of-users">
+        {{ adminStats?.managerNumber }}
+      </div></mat-card-content
+    >
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Employees</mat-card-title>
+    </mat-card-header>
+    <mat-card-content
+      ><div class="number-of-users">
+        {{ adminStats?.employeeNumber }}
+      </div></mat-card-content
+    >
+  </mat-card>
+</div>
+
+<div class="manager-tabs-container" *ngIf="user?.role == 'Manager'">
+  <mat-form-field class="tabs-selector" appearance="fill">
+    <mat-label>Select a user</mat-label>
+    <mat-select [(value)]="selectedEmail">
+      <ng-container *ngFor="let u of users$ | async">
+        <mat-option class="option-selector" [value]="u.email">
+          {{ u?.email }}
+        </mat-option>
+      </ng-container>
+    </mat-select>
+  </mat-form-field>
+
+  <app-tab
+    [assigned$]="assignedUser$ | async | filterState: selectedEmail"
+    [completed$]="completedUser$ | async | filterState: selectedEmail"
+    [failed$]="failedUser$ | async | filterState: selectedEmail"
+  ></app-tab>
+</div>

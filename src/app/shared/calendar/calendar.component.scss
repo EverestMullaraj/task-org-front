@@ -1,0 +1,16 @@
+.calendar-container {
+  width: 90%;
+  margin: 5% auto;
+
+  @media screen and (max-width: 660px) {
+    width: 95%;
+    margin: 15% auto;
+  }
+}
+
+h3 {
+  margin-top: 15px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}

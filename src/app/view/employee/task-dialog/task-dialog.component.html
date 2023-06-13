@@ -1,0 +1,32 @@
+<mat-card>
+  <mat-card-title>{{ task?.title }}</mat-card-title>
+  <mat-card-subtitle> Assigned by: {{ task?.from }}</mat-card-subtitle>
+  <mat-card-content>
+    <div>
+      Description:
+      <p>{{ task?.description }}</p>
+    </div>
+    <div class="task-deadline">
+      <div>
+        Deadline:
+        <mat-card-subtitle>{{ task?.end | date: "medium" }}</mat-card-subtitle>
+      </div>
+      <div *ngIf="task?.status === 'Completed'" class="status-border completed">
+        {{ task?.status }}
+      </div>
+      <div *ngIf="task?.status === 'Assigned'" class="status-border assigned">
+        {{ task?.status }}
+      </div>
+      <div *ngIf="task?.status === 'Failed'" class="status-border failed">
+        {{ task?.status }}
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<mat-dialog-actions *ngIf="task?.status == 'Assigned'">
+  <button mat-raised-button (click)="onClose()">Close</button>
+
+  <button mat-raised-button color="primary" (click)="onSave()">
+    Mark as Completed
+  </button>
+</mat-dialog-actions>
